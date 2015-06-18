@@ -18,7 +18,7 @@ function apiFriendlyResource (resource) {
     _id: resource._id,
     upvotes: resource.upvotes.length,
     downvotes: resource.downvotes.length,
-    title: resource.title,
+    resId: resource.resId,
     url: resource.url,
     description: resource.description,
     userId: resource.userId,
@@ -51,7 +51,7 @@ function upsertResource (req, res) {
   var resource = {
     userId: req.user.userId,
     url: req.body.url,
-    title: req.body.title,
+    resId: req.body.resId,
     description: req.body.description,
     tags: req.body.tags || [],
     upvotes: [],

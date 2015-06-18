@@ -17,7 +17,7 @@ module.exports = Backbone.View.extend({
   },
 
   initialize: function () {
-    this.listenTo(this.model, 'change remove add', this.render);
+    this.listenTo(this.model, 'add', this.render);
     
     this.model.fetch().done(this.render.bind(this)).fail(function () {
       alert('Failed to load add new!');
@@ -28,7 +28,7 @@ module.exports = Backbone.View.extend({
   render: function () {
     console.log(this.model.toJSON());
     this.$el.html(this.template({ 
-      shares: _.chain(this.model.toJSON()).sortBy('shareId')
+      shares: this.model.toJSON()
     }));
   },
   
