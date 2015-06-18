@@ -85,6 +85,7 @@ gulp.task('deploy', function() {
 // Adding the CSS task
 gulp.task('scss', function () {
   return gulp.src('./src/css/main.scss')
+    .on('error', swallowError)
     .pipe(sass().on('error', sass.logError))
     .pipe(rename('main.css'))
     .pipe(autoprefixer({
@@ -96,14 +97,24 @@ gulp.task('scss', function () {
 
 // Build our JavaScript files using browserify
 gulp.task('js', function () {
-  return browserify('./src/init.js', { debug: true })
+  var stream;
+  
+  try {
+    stream = browserify('./src/init.js', { debug: true })
     .transform('bulkify')
     .external('views')
     .external('jquery')
     .external('underscore')
     .external('backbone')
     .external('parsleyjs')
-    .bundle()
+    .bundle();
+  } catch (ex) {
+    console.error(ex);
+    return;
+  }
+  
+  return stream
+     .on('error', swallowError)
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({ loadMaps: true }))
@@ -119,6 +130,7 @@ gulp.task('js:vendor', function () {
     .require('backbone')
     .require('parsleyjs')
     .bundle()
+    .on('error', swallowError)
     .pipe(source('vendor.js'))
     .pipe(gulp.dest('./dist/js'));
 });
@@ -126,6 +138,7 @@ gulp.task('js:vendor', function () {
 // Turn all views into a JavaScript object
 gulp.task('js:views', function () {
   return gulp.src(src.allViews)
+    .on('error', swallowError)
     .pipe(hashify('bundled-views.js'))
     .pipe(tap(function(file) {
       return browserify()
@@ -160,3 +173,10 @@ gulp.task('font', function () {
 gulp.task('clean', function (cb) {
   del('./dist', cb);
 });
+
+
+// Prevent gulp from crashing and leaving a running Node process behind
+function swallowError (error) {
+  console.log(error.toString());
+  this.emit('end');
+}

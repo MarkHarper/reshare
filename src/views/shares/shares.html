@@ -1,0 +1,13 @@
+<ul class="shares stack-list">
+  <% _.chain(m.shares).each(function (share) { %>
+    <li class="share stack-list-item">
+      <p>title: <a class="share-title" href="#/shares/<%- share.title %>"><%- share.title %></a></p>
+      <p>
+        url: <%- share.url %>
+      </p>
+      <p>
+        description: <%- share.description %>
+      </p>
+    </li>
+  <% }) %>
+</ul>
