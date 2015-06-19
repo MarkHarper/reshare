@@ -2,9 +2,11 @@
 
 var Backbone = require('backbone');
 var _ = require('underscore');
+var $ = require('jquery');
 var template = require('../template');
 var handleError = require('../../util/handle-error');
 var formToObj = require('form-to-obj');
+
 
 module.exports = Backbone.View.extend({
   
@@ -22,7 +24,7 @@ module.exports = Backbone.View.extend({
     this.model.fetch().done(this.render.bind(this)).fail(function () {
       alert('Failed to load add new!');
       console.error(arguments);
-    });
+    });    
   },
 
   render: function () {
@@ -40,3 +42,4 @@ module.exports = Backbone.View.extend({
     this.model.create(share, handleError());
   }
 });
+

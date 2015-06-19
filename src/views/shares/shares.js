@@ -7,7 +7,7 @@ var template = require('../template');
 module.exports = Backbone.View.extend({
   template: template('shares/shares'),
 
-  className: 'share',
+  className: 'share cards',
 
   initialize: function () {
     this.listenTo(this.model, 'change', this.render);

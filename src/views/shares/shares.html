@@ -1,13 +1,15 @@
-<ul class="shares stack-list">
+<div class="shares stack-list">
   <% _.chain(m.shares).each(function (share) { %>
-    <li class="share stack-list-item">
-      <p>title: <a class="share-title" href="#/share/<%- share.resId %>"><%- share.resId %></a></p>
-      <p>
-        url: <%- share.url %>
-      </p>
-      <p>
-        description: <%- share.description %>
-      </p>
-    </li>
+    <div class="share stack-list-item card">
+      <p class="card-header">title: <a class="share-title" href="#/share/<%- share.resId %>"><%- share.resId %></a></p>
+      <div class="card-copy">
+        <p>
+          url: <a href="<%- share.url %>">Visit</a>
+        </p>
+        <p>
+          description: <%- share.description %>
+        </p>
+      </div>
+    </div>
   <% }) %>
-</ul>
+</div>

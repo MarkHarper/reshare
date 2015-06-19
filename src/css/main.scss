@@ -7,6 +7,11 @@
 @import 'common-layout';
 @import 'bitters-variables';
 @import 'bitters-forms';
+@import 'refills-cards';
 @import 'forms';
 
-
+.card {
+	@include span-columns(3);
+	float: left;
+	margin: 1em;
+}

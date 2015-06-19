@@ -10,3 +10,4 @@ router.route('share/:id', function (id) {
     model: new Share({ resId: id })
   }));
 });
+
